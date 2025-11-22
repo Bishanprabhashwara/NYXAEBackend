@@ -24,6 +24,22 @@ const updateTshirtValidationSchema = Joi.object({
   colors: Joi.array().items(Joi.string().trim())
 }).min(1);
 
+const addToCartValidationSchema = Joi.object({
+  tshirtId: Joi.string(),
+  productId: Joi.string(),
+  name: Joi.string().required().trim().max(100),
+  price: Joi.number().required().min(0),
+  quantity: Joi.number().required().min(1),
+  size: Joi.string().required().valid('XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'),
+  color: Joi.string().required().trim(),
+  thumbnailImage: Joi.string().trim()
+}).or('tshirtId', 'productId');
+
+const updateCartValidationSchema = Joi.object({
+  itemId: Joi.string().required(),
+  quantity: Joi.number().required().min(1)
+});
+
 const validateTshirt = (req, res, next) => {
   const { error } = tshirtValidationSchema.validate(req.body);
   if (error) {
@@ -48,6 +64,30 @@ const validateUpdateTshirt = (req, res, next) => {
   next();
 };
 
+const validateAddToCart = (req, res, next) => {
+  const { error } = addToCartValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Error',
+      errors: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
+const validateUpdateCart = (req, res, next) => {
+  const { error } = updateCartValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Error',
+      errors: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
 const validateId = (req, res, next) => {
   const { id } = req.params;
   if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -62,5 +102,7 @@ const validateId = (req, res, next) => {
 module.exports = {
   validateTshirt,
   validateUpdateTshirt,
+  validateAddToCart,
+  validateUpdateCart,
   validateId
 };
