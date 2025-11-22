@@ -13,7 +13,10 @@ const app = express();
 connectDB();
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: ['https://nyxae.vercel.app', 'http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
