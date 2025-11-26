@@ -40,6 +40,37 @@ const updateCartValidationSchema = Joi.object({
   quantity: Joi.number().required().min(1)
 });
 
+const orderItemValidationSchema = Joi.object({
+  productId: Joi.string().required().trim(),
+  tshirtId: Joi.string().required(),
+  name: Joi.string().required().trim().max(100),
+  price: Joi.number().required().min(0),
+  quantity: Joi.number().required().min(1),
+  size: Joi.string().required().valid('XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'),
+  color: Joi.string().required().trim(),
+  thumbnailImage: Joi.string().trim(),
+  isconfirmed: Joi.boolean(),
+  ispacked: Joi.boolean(),
+  isdilivered: Joi.boolean()
+});
+
+const createOrderValidationSchema = Joi.object({
+  customerName: Joi.string().required().trim().max(100),
+  email: Joi.string().required().trim().email(),
+  whatsapp: Joi.string().required().trim(),
+  address: Joi.string().required().trim(),
+  items: Joi.array().items(orderItemValidationSchema).min(1).required(),
+  subtotal: Joi.number().required().min(0),
+  tax: Joi.number().required().min(0),
+  total: Joi.number().required().min(0)
+});
+
+const updateOrderStatusValidationSchema = Joi.object({
+  isOrderConfirmed: Joi.boolean(),
+  isOrderPacking: Joi.boolean(),
+  isOrderDelivered: Joi.boolean()
+}).min(1);
+
 const validateTshirt = (req, res, next) => {
   const { error } = tshirtValidationSchema.validate(req.body);
   if (error) {
@@ -99,10 +130,36 @@ const validateId = (req, res, next) => {
   next();
 };
 
+const validateCreateOrder = (req, res, next) => {
+  const { error } = createOrderValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Error',
+      errors: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
+const validateUpdateOrderStatus = (req, res, next) => {
+  const { error } = updateOrderStatusValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Error',
+      errors: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
 module.exports = {
   validateTshirt,
   validateUpdateTshirt,
   validateAddToCart,
   validateUpdateCart,
-  validateId
+  validateId,
+  validateCreateOrder,
+  validateUpdateOrderStatus
 };

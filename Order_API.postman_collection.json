@@ -1,0 +1,323 @@
+{
+    "info": {
+        "name": "T-Shirt Store Order API",
+        "description": "Complete API collection for T-Shirt Store Order Management System",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Orders",
+            "item": [
+                {
+                    "name": "Create Order",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"customerName\": \"Bishan Prabhashwara\",\n  \"email\": \"bishanprabhashwara@gmail.com\",\n  \"whatsapp\": \"456456465465\",\n  \"address\": \"123 Main Street, Colombo, Sri Lanka\",\n  \"items\": [\n    {\n      \"productId\": \"TSH001\",\n      \"tshirtId\": \"507f1f77bcf86cd799439011\",\n      \"name\": \"Classic Cotton T-Shirt\",\n      \"price\": 129.99,\n      \"quantity\": 1,\n      \"size\": \"M\",\n      \"color\": \"Black\",\n      \"thumbnailImage\": \"https://example.com/tshirt1.jpg\",\n      \"isconfirmed\": false,\n      \"ispacked\": false,\n      \"isdilivered\": false\n    },\n    {\n      \"productId\": \"TSH002\",\n      \"tshirtId\": \"507f1f77bcf86cd799439012\",\n      \"name\": \"Premium Cotton T-Shirt\",\n      \"price\": 229.99,\n      \"quantity\": 2,\n      \"size\": \"L\",\n      \"color\": \"White\",\n      \"thumbnailImage\": \"https://example.com/tshirt2.jpg\",\n      \"isconfirmed\": false,\n      \"ispacked\": false,\n      \"isdilivered\": false\n    },\n    {\n      \"productId\": \"TSH003\",\n      \"tshirtId\": \"507f1f77bcf86cd799439013\",\n      \"name\": \"Vintage T-Shirt\",\n      \"price\": 129.99,\n      \"quantity\": 2,\n      \"size\": \"XL\",\n      \"color\": \"Navy\",\n      \"thumbnailImage\": \"https://example.com/tshirt3.jpg\",\n      \"isconfirmed\": false,\n      \"ispacked\": false,\n      \"isdilivered\": false\n    }\n  ],\n  \"subtotal\": 749.95,\n  \"tax\": 60.00,\n  \"total\": 809.95\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get All Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders?page=1&limit=10&sortBy=createdAt&sortOrder=desc",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "sortBy",
+                                    "value": "createdAt"
+                                },
+                                {
+                                    "key": "sortOrder",
+                                    "value": "desc"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Order by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "507f1f77bcf86cd799439011",
+                                    "description": "Order ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Orders by Email",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/email/:email",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                "email",
+                                ":email"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "email",
+                                    "value": "bishanprabhashwara@gmail.com",
+                                    "description": "Customer Email"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Order Status - Confirm",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"isOrderConfirmed\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/:id/status",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                ":id",
+                                "status"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "507f1f77bcf86cd799439011",
+                                    "description": "Order ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Order Status - Packing",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"isOrderPacking\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/:id/status",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                ":id",
+                                "status"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "507f1f77bcf86cd799439011",
+                                    "description": "Order ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Order Status - Delivered",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"isOrderDelivered\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/:id/status",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                ":id",
+                                "status"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "507f1f77bcf86cd799439011",
+                                    "description": "Order ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Order",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"customerName\": \"Bishan Prabhashwara Updated\",\n  \"email\": \"bishanprabhashwara@gmail.com\",\n  \"whatsapp\": \"9876543210\",\n  \"address\": \"456 New Address, Colombo, Sri Lanka\",\n  \"items\": [\n    {\n      \"productId\": \"TSH001\",\n      \"tshirtId\": \"507f1f77bcf86cd799439011\",\n      \"name\": \"Classic Cotton T-Shirt\",\n      \"price\": 129.99,\n      \"quantity\": 3,\n      \"size\": \"M\",\n      \"color\": \"Black\",\n      \"thumbnailImage\": \"https://example.com/tshirt1.jpg\",\n      \"isconfirmed\": false,\n      \"ispacked\": false,\n      \"isdilivered\": false\n    }\n  ],\n  \"subtotal\": 389.97,\n  \"tax\": 31.20,\n  \"total\": 421.17\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "507f1f77bcf86cd799439011",
+                                    "description": "Order ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Order",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "orders",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "507f1f77bcf86cd799439011",
+                                    "description": "Order ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/health",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "health"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        }
+    ]
+}

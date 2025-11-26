@@ -8,6 +8,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 const tshirtRoutes = require('./routes/tshirtRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.all('/', (req, res) => {
 
 app.use('/api/tshirts', tshirtRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
