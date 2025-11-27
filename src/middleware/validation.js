@@ -154,6 +154,40 @@ const validateUpdateOrderStatus = (req, res, next) => {
   next();
 };
 
+const registerValidationSchema = Joi.object({
+  email: Joi.string().required().trim().email(),
+  password: Joi.string().required().min(6).max(100)
+});
+
+const loginValidationSchema = Joi.object({
+  email: Joi.string().required().trim().email(),
+  password: Joi.string().required()
+});
+
+const validateRegister = (req, res, next) => {
+  const { error } = registerValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Error',
+      errors: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
+const validateLogin = (req, res, next) => {
+  const { error } = loginValidationSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Error',
+      errors: error.details.map(detail => detail.message)
+    });
+  }
+  next();
+};
+
 module.exports = {
   validateTshirt,
   validateUpdateTshirt,
@@ -161,5 +195,7 @@ module.exports = {
   validateUpdateCart,
   validateId,
   validateCreateOrder,
-  validateUpdateOrderStatus
+  validateUpdateOrderStatus,
+  validateRegister,
+  validateLogin
 };
